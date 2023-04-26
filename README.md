@@ -1,4 +1,4 @@
 # Sudoko
  
-###Aluno: Gabriel Oliviera Quaresma
-####Mátricula: 202265178A
+### Aluno: Gabriel Oliviera Quaresma
+#### Mátricula: 202265178A
