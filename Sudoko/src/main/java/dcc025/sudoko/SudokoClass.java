@@ -23,6 +23,17 @@ public class SudokoClass {
             {0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0},
         };;
+    private static int[][] matrizBase = {
+            {0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,0,0,0,0},
+        };;
     private static final int GRID_SIZE = 9; // tamanho da lateral do tabuleiro
  
     private static final Scanner teclado = new Scanner(System.in);
@@ -40,6 +51,7 @@ public class SudokoClass {
             {0,0,0,0,0,0,0,0,0},
         };
         board = tabu; //Reinicia o Objeto caso o usuario queira jogar novamente
+        matrizBase = tabu;
     }
     
 
@@ -62,13 +74,27 @@ public class SudokoClass {
     public static void implementnadoEscolhas(int i){
         switch (i) {
             case 1 -> { // Caso o usuário queira um jogo aleatorio
+                int [][] matAleatoria = {
+                {5, 3, 4, 6, 7, 8, 9, 1, 2},
+                {6, 7, 2, 1, 9, 5, 3, 4, 8},
+                {1, 9, 8, 3, 4, 2, 5, 6, 7},
+                {8, 5, 9, 7, 6, 1, 4, 2, 3},
+                {4, 2, 6, 8, 5, 3, 7, 9, 1},
+                {7, 1, 3, 9, 2, 4, 8, 5, 6},
+                {9, 6, 1, 5, 3, 7, 2, 8, 4},
+                {2, 8, 7, 4, 1, 9, 6, 3, 5},
+                {3, 4, 5, 2, 8, 6, 1, 7, 9}
+                };
+                
+                matrizBase = matAleatoria;
+                
                 System.out.println("Digite um valor de casas a serem ocupadas: ");
                 int casas_ocupadas = teclado.nextInt();
                 teclado.nextLine();
                 System.out.println();
-                if(casas_ocupadas > 0 && casas_ocupadas < 82) // checa se o valor está dentro das casas possiveis do tabuleiro
+                if(casas_ocupadas >= 0 && casas_ocupadas < 81) // checa se o valor está dentro das casas possiveis do tabuleiro
                 {
-                geraTabuleiroAleatorio(casas_ocupadas);
+                geraTabuleiroAleatorio(81 - casas_ocupadas);
                 printBoard();
                 jogar();
                 }
@@ -126,34 +152,23 @@ public class SudokoClass {
     
     
 
-    public static boolean geraTabuleiroAleatorio(int n_preenchidos){
-        //função recursiva para gerar um tabuleiro de forma recursiva 
-        if (n_preenchidos == 0) {
-        return true; // caso base da recurssão
-    }
-    
-    Random random = new Random();
-    //gerando valores aleatorios para linha e coluna
-    int row = random.nextInt(GRID_SIZE);
-    int col = random.nextInt(GRID_SIZE);
-    
-    while (board[row][col] != 0) { //checa se os valores de linha e coluna resultam em um espaço vazio
-        row = random.nextInt(GRID_SIZE);
-        col = random.nextInt(GRID_SIZE);
-    }
-    
-    for (int value = 1; value <= GRID_SIZE; value++) {
-        if (validamentoPosicao(value, col, row)) {
-            board[row][col] = value; 
-            if (geraTabuleiroAleatorio(n_preenchidos - 1)) {
-                return true; //caso preencha o valor retorna true para a recurssão funcionar
-            }
-            board[row][col] = 0; // caso não preencha o valor
+    public static void geraTabuleiroAleatorio(int casasParaRemover){
+        
+        
+        Random rand = new Random();
+        int count = 0;
+        
+        while (count < casasParaRemover) { // Busca valores aleatoriamente para remover
+        int row = rand.nextInt(GRID_SIZE);
+        int column = rand.nextInt(GRID_SIZE);
+        if (board[row][column] != 0) {
+            matrizBase[row][column] = 0;
+            count++;
+        }
+            board = matrizBase;
         }
     }
-    
-    return false; //caso o valor não seja preenchido no local
-    }
+   
     private static boolean checaAlcance(int valor, int column, int row)
     {
         //função para checar se os parametros do usuario estão no padrão do jogo
@@ -166,15 +181,24 @@ public class SudokoClass {
         //Inserção de um valor do usuario checando se é possivel a inserção
         if(checaAlcance(valor, column, row)){
             if(validamentoPosicao(valor, column, row)){
+                if(board[row][column] == 0)
                 board[row][column] = valor;
+                 else 
+                System.out.println("Valores invalidos");
+                    
             }
+             else 
+            System.out.println("Valores invalidos");
         }
+        else 
+            System.out.println("Valores invalidos");
     }
     
     private static void criarJogo(){
         //função utilizada para o usuario criar seu proprio jogo
         System.out.println("Digite valores no formato (linha,coluna,valor), para inserir no tabuleiro, para terminar digite 'sair'");
         leValor();
+        matrizBase = board;
         jogar();
     }
     
@@ -203,7 +227,10 @@ public class SudokoClass {
     }
     
     private static void removeJogada(int row, int column){
+        if(matrizBase[row][column] == 0)
         board[row][column] = 0;
+        else
+            System.out.println("Valor pre-estabelecido");
     }
     
     private static boolean checaJogoFinalizado(){
@@ -224,7 +251,7 @@ public class SudokoClass {
        
         int opc;
         do{
-            System.out.println("1)Inserir Jogadas\n2)Remover Jogada\n3)Checar Tabuleiro(Finalizado)\n4)Dica!\n5)Sair");
+            System.out.println("1)Inserir Jogadas\n2)Remover Jogada\n3)Checar Tabuleiro\n4)Dica!\n5)Sair");
             opc = teclado.nextInt();
             teclado.nextLine();
             
@@ -261,12 +288,9 @@ public class SudokoClass {
                 
                 case 3 -> {
                     // Checa o tabuleiro
-                    if(checaJogoFinalizado()){
-                        System.out.println("Parabens! Voce venceu");
-                        opc = 5; // Para sair do loop do while()
-                    }
-                    else
+                    if(!checaJogoFinalizado()){
                         System.out.println("Ainda não"); // Caso o tabuleiro ainda possua Zeros
+                    }
                 }
                 
                 case 4 -> // Dica
@@ -275,8 +299,11 @@ public class SudokoClass {
                         opc = 5;
                     }
                 }
-                
-                  
+ 
+            }
+            if(checaJogoFinalizado()){
+                System.out.println("Parabens! Voce venceu");
+                opc = 5;
             }
         }while(opc != 5);
     
