@@ -11,5 +11,5 @@
 #### 3: Open the terminal on that folder, then run the following command:
 #####  "mvn install" - "if you have problems with this line code, try: mvn clean intall"
 
-#### 4: Now a "target" directory must be created. Now to run, wrtie the command line:
+#### 4: Now a "target" directory must be created. Now to run, write the command line:
 #####  "java jar- target/SudokoMain-1.0-SNAPSHOT-jar-with-dependencies.jar."
