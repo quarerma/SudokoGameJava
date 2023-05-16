@@ -2,7 +2,7 @@
  
 ### Author: Gabriel Oliveira Quaresma
 #### Compile and run instructions:
-###### Requirements Java 8 or newer and Apache Maven 3.6.3 or newer versions
+###### Requirements Java 17 or newer and Apache Maven 3.6.3 or newer versions
 
 #### 1: Download and unzip the code
 
