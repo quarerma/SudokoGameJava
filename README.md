@@ -9,7 +9,15 @@
 #### 2: Find the folder with the "src" folder and the "pom.xml" arquive
 
 #### 3: Open the terminal on that folder, then run the following command:
-#####  "mvn install" - "if you have problems with this line code, try: mvn clean intall"
-
-#### 4: Now a "target" directory must be created. Now to run, write the command line:
-#####  "java jar- target/Sudoko-1.0-SNAPSHOT-jar-with-dependencies.jar."
+  ````
+   mvn install
+ ````
+###### if you have problems with this line code, try: 
+  ````
+  mvn clean intall
+ ````
+ 
+#### 4: Now a "target" directory must be created. Now to run, write the command line
+ ````
+java jar- target/Sudoko-1.0-SNAPSHOT-jar-with-dependencies.jar
+````
